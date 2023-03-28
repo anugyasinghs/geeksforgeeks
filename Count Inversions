@@ -1,0 +1,165 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*;
+import java.io.*;
+import java.lang.*;
+
+class Sorting
+{
+    public static void main (String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+        long t = sc.nextLong();
+        
+        while(t-- > 0)
+        {
+            long n = sc.nextLong();
+            long arr[] = new long[(int)n];
+            
+            for(long i = 0; i < n; i++)
+             arr[(int)i] = sc.nextLong();
+             
+            System.out.println(new Solution().inversionCount(arr, n));
+            
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    // arr[]: Input Array
+    // N : Size of the Array arr[]
+    //Function to count inversions in the array.
+    
+ static long inversionCount(long arr[], long N)
+
+    {
+
+       return mergeSort(arr,0,N-1);
+
+       
+
+    }
+
+     public static long mergeSort(long arr[],long s, long e)
+
+    {
+
+        if(s>=e)
+
+        {
+
+            return 0;
+
+        }
+
+        long mid=(s+e)/2;
+
+       long inv= mergeSort(arr,s,mid);
+
+       inv=inv+ mergeSort(arr,mid+1,e);
+
+      inv=inv+  merge(arr,s,e);
+
+       return inv; 
+
+    }
+
+    public static long merge(long arr[],long s,long e)
+
+    {
+
+        long ans=0;
+
+        long mid=(s+e)/2;
+
+        long len1=mid-s+1;
+
+        long len2=e-mid;
+
+        
+
+        long arr1[] = new long[(int)len1];
+
+        long arr2[] = new long[(int)len2];
+
+        
+
+        long originalIndex=s;
+
+        for(int i=0; i<len1; i++)
+
+        {
+
+            arr1[i]=arr[(int)originalIndex++];
+
+        }
+
+        for(int i=0; i<len2; i++)
+
+        {
+
+            arr2[i]=arr[(int)originalIndex++];
+
+        }
+
+        
+
+        originalIndex=s;
+
+        long idx1=0;
+
+        long idx2=0;
+
+        while(idx1<len1 && idx2<len2)
+
+        {
+
+            if(arr1[(int)idx1]>arr2[(int)idx2])
+
+            {
+
+                 ans=ans+(len1-idx1);
+
+                arr[(int)originalIndex++]=arr2[(int)idx2++];
+
+                
+
+            }else{
+
+                arr[(int)originalIndex++]=arr1[(int)idx1++];
+
+            }
+
+        }
+
+        while(idx1<len1)
+
+        {
+
+            arr[(int)originalIndex++]=arr1[(int)idx1++];
+
+        }
+
+        while(idx2<len2)
+
+        {
+
+            arr[(int)originalIndex++]=arr2[(int)idx2++];
+
+        }
+
+        return ans;
+
+    }
+}
+
+
+
+
