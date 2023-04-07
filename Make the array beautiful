@@ -1,0 +1,84 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+
+class IntArray {
+    public static int[] input(BufferedReader br, int n) throws IOException {
+        String[] s = br.readLine().trim().split(" ");
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) a[i] = Integer.parseInt(s[i]);
+
+        return a;
+    }
+
+    public static void print(int[] a) {
+        for (int e : a) System.out.print(e + " ");
+        System.out.println();
+    }
+
+    public static void print(ArrayList<Integer> a) {
+
+        for (int e : a) System.out.print(e + " ");
+        System.out.println();
+    }
+}
+
+class GFG {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(System.out);
+        int t;
+        t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+
+            int n;
+            n = Integer.parseInt(br.readLine());
+
+            int[] arr = IntArray.input(br, n);
+
+            Solution obj = new Solution();
+            ArrayList<Integer> res = obj.makeBeautiful(arr);
+            for (int e : res) out.print(e + " ");
+            out.println();
+        }
+        out.close();
+    }
+}
+
+// } Driver Code Ends
+
+
+class Solution {
+    public static ArrayList<Integer> makeBeautiful(int[] arr) {
+        // code here
+                ArrayList<Integer> ar = new ArrayList<>();
+        
+        // adding the first element to the arrayList
+        ar.add(arr[0]);
+        
+        for(int i=1;i<arr.length;i++){
+            
+            //verify if the elements are present in the arrayList or not let we add them!
+            if(ar.size() == 0){
+                ar.add(arr[i]);
+            }
+            else{
+                int si = ar.size()-1;
+                int a = ar.get(si);
+                int b = arr[i];
+                if(a >= 0 && b >=0){    //checking if previous and current the element are positive
+                    ar.add(b);
+                }
+                else if(a<0 && b< 0){   //Or checking if previous and current the numbers are negative
+                    ar.add(b);
+                }
+                else{                   // if not remove the previous number and dont add the current number
+                    ar.remove(si);
+                }
+            }
+        }
+        return ar;
+
+    }
+}
